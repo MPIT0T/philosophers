@@ -6,12 +6,18 @@
 #    By: mpitot <mpitot@student.42lyon.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/22 15:09:12 by mpitot            #+#    #+#              #
-#    Updated: 2024/02/22 19:57:14 by mpitot           ###   ########.fr        #
+#    Updated: 2024/02/27 16:13:26 by mpitot           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-SRCS	=	main.c	\
-			utils.c
+SRCS	=	main.c			\
+			utils.c			\
+			init.c			\
+			print_info.c	\
+			time.c			\
+			routine_odd.c	\
+			routine_pair.c	\
+			routine_utils.c	\
 
 OBJS	=	$(SRCS:%.c=${OBJ_D}%.o)
 
