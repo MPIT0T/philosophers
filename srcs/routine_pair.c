@@ -6,7 +6,7 @@
 /*   By: mpitot <mpitot@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 15:33:33 by mpitot            #+#    #+#             */
-/*   Updated: 2024/02/27 17:16:56 by mpitot           ###   ########.fr       */
+/*   Updated: 2024/02/28 18:00:35 by mpitot           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,11 @@ void	*ft_routine_pair(void *arg)
 	t_philo	*philo;
 
 	philo = (t_philo *)arg;
-	philo->ready = true;
-	while (!everyone_ready(philo->data));
+	pthread_mutex_lock(philo->data->print);
+	printf("philo->data->nb_philo = %ld\n", philo->data->nb_philo);
+	pthread_mutex_unlock(philo->data->print);
+	while (!everyone_ready(&philo->data))
+		philo->ready = true;
 	while (philo->alive)
 	{
 		ft_eat_pair(philo);

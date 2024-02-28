@@ -64,7 +64,7 @@ void		*ft_routine_odd(void *arg);
 	//utils
 int			ft_try_lfork(t_philo *philo);
 int			ft_try_rfork(t_philo *philo);
-bool		everyone_ready(t_data *data);
+bool		everyone_ready(t_data **data);
 void		ft_sleep(t_philo *philo);
 
 

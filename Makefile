@@ -6,7 +6,7 @@
 #    By: mpitot <mpitot@student.42lyon.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/22 15:09:12 by mpitot            #+#    #+#              #
-#    Updated: 2024/02/27 16:13:26 by mpitot           ###   ########.fr        #
+#    Updated: 2024/02/27 20:28:51 by mpitot           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,6 +18,7 @@ SRCS	=	main.c			\
 			routine_odd.c	\
 			routine_pair.c	\
 			routine_utils.c	\
+			fork_operations.c
 
 OBJS	=	$(SRCS:%.c=${OBJ_D}%.o)
 

@@ -6,7 +6,7 @@
 /*   By: mpitot <mpitot@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 15:33:48 by mpitot            #+#    #+#             */
-/*   Updated: 2024/02/27 17:16:56 by mpitot           ###   ########.fr       */
+/*   Updated: 2024/02/28 17:58:29 by mpitot           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ int	ft_init(t_data *data, int argc, char **argv)
 	i = -1;
 	while (++i < data->nb_philo)
 		ft_fill_structs(data, i);
-	data->time_to_die = atoll(argv[2]);
+	data->time_to_die = atoll(argv[2]);	//TODO remove atoll
 	data->time_to_eat = atoll(argv[3]);
 	data->time_to_sleep = atoll(argv[4]);
 	data->max_meals = 0;

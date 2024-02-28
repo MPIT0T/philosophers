@@ -6,20 +6,20 @@
 /*   By: mpitot <mpitot@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 15:40:24 by mpitot            #+#    #+#             */
-/*   Updated: 2024/02/27 18:00:01 by mpitot           ###   ########.fr       */
+/*   Updated: 2024/02/28 18:00:35 by mpitot           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
 
-bool	everyone_ready(t_data *data)
+bool	everyone_ready(t_data **data)
 {
 	size_t i;
 
 	i = -1;
-	while (++i < data->nb_philo)
+	while (++i < (*data)->nb_philo)
 	{
-		if (!data->philo[i].ready)
+		if (!(*data)->philo[i].ready)
 			return (false);
 	}
 	return (true);
