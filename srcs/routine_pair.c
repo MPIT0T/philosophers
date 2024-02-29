@@ -40,11 +40,9 @@ void	*ft_routine_pair(void *arg)
 	t_philo	*philo;
 
 	philo = (t_philo *)arg;
-	pthread_mutex_lock(philo->data->print);
+	/*pthread_mutex_lock(philo->data->print);
 	printf("philo->data->nb_philo = %ld\n", philo->data->nb_philo);
-	pthread_mutex_unlock(philo->data->print);
-	while (!everyone_ready(&philo->data))
-		philo->ready = true;
+	pthread_mutex_unlock(philo->data->print);*/
 	while (philo->alive)
 	{
 		ft_eat_pair(philo);

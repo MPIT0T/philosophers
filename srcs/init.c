@@ -6,7 +6,7 @@
 /*   By: mpitot <mpitot@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 15:33:48 by mpitot            #+#    #+#             */
-/*   Updated: 2024/02/28 17:58:29 by mpitot           ###   ########.fr       */
+/*   Updated: 2024/02/29 12:43:25 by mpitot           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,16 +44,29 @@ int	ft_malloc_structs(t_data *data)
 	return (0);
 }
 
-void	ft_fill_structs(t_data *data, size_t i)
+int	ft_init_mutexes(t_data *data)
+{
+	size_t	i;
+
+	i = -1;
+	while (++i < data->nb_philo)
+	{
+		if (pthread_mutex_init(data->forks[i].mutex, NULL))
+			return (error_msg(4), 1);
+	}
+	return (0);
+}
+
+void	ft_fill_structs(t_data *data, t_philo *philo, size_t i)
 {
 	data->forks[i].owner = 0;
-	data->philo[i].id = (int) i + 1;
-	data->philo[i].l_fork = &data->forks[i];
-	data->philo[i].r_fork = &data->forks[(i + 1) % data->nb_philo];
-	data->philo[i].alive = true;
-	data->philo[i].last_meal = 0;
-	data->philo[i].data = data;
-	data->philo[i].ready = false;
+	(*philo).id = (int) i + 1;
+	(*philo).l_fork = &data->forks[i];
+	(*philo).r_fork = &data->forks[(i + 1) % data->nb_philo];
+	(*philo).alive = true;
+	(*philo).last_meal = 0;
+	(*philo).data = data;
+	(*philo).ready = false;
 }
 
 int	ft_init(t_data *data, int argc, char **argv)
@@ -67,7 +80,7 @@ int	ft_init(t_data *data, int argc, char **argv)
 	ft_malloc_structs(data);
 	i = -1;
 	while (++i < data->nb_philo)
-		ft_fill_structs(data, i);
+		ft_fill_structs(data, &data->philo[i], i);
 	data->time_to_die = atoll(argv[2]);	//TODO remove atoll
 	data->time_to_eat = atoll(argv[3]);
 	data->time_to_sleep = atoll(argv[4]);
@@ -76,5 +89,6 @@ int	ft_init(t_data *data, int argc, char **argv)
 		data->max_meals = atoi(argv[5]);
 	data->first_time = first_time;
 	data->dead = false;
+	ft_init_mutexes(data);
 	return (0);
 }

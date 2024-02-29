@@ -6,7 +6,7 @@
 /*   By: mpitot <mpitot@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 15:10:44 by mpitot            #+#    #+#             */
-/*   Updated: 2024/02/27 18:00:01 by mpitot           ###   ########.fr       */
+/*   Updated: 2024/02/29 12:20:18 by mpitot           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,8 +76,8 @@ size_t		ft_strlen(const char *s);
 int			ft_init_threads(t_data *data);
 int			ft_init(t_data *data, int argc, char **argv);
 int			ft_malloc_structs(t_data *data);
-void		ft_fill_structs(t_data *data, size_t i);
-
+void		ft_fill_structs(t_data *data, t_philo *philo, size_t i);
+int			ft_init_mutexes(t_data *data);
 
 //PRINT
 void		ft_put_info(t_philo *philo, const char *str);
