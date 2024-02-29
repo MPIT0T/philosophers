@@ -6,7 +6,7 @@
 #    By: mpitot <mpitot@student.42lyon.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/22 15:09:12 by mpitot            #+#    #+#              #
-#    Updated: 2024/02/29 12:11:35 by mpitot           ###   ########.fr        #
+#    Updated: 2024/02/29 15:26:24 by mpitot           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,7 +32,7 @@ NAME	=	philo
 
 CC		=	cc
 
-FLAGS	=	-Wall -Wextra -Werror -Iincludes
+FLAGS	=	-Wall -Wextra -Werror
 
 GREEN	=	\033[1;32m
 BLUE	=	\033[1;34m
@@ -42,6 +42,8 @@ DEFAULT	=	\033[0m
 UP		=	"\033[A"
 CUT		=	"\033[K"
 
+CHANGED	=	0
+
 all		:	${NAME}
 
 ${OBJS}	:	${OBJ_D}%.o: ${SRC_D}%.c includes/philo.h
@@ -50,7 +52,8 @@ ${OBJS}	:	${OBJ_D}%.o: ${SRC_D}%.c includes/philo.h
 	@printf ${UP}${CUT}
 
 ${NAME}	:	${OBJ_D} ${OBJS} Makefile includes/philo.h
-	@${CC} ${FLAGS} -o ${NAME} ${OBJS}
+	@${CC} ${FLAGS} -lpthread -I{HEAD} -o ${NAME} ${OBJS}
+	@$(eval CHANGED=1)
 	@echo "$(GREEN)$(NAME) compiled.$(DEFAULT)"
 
 ${OBJ_D}:
@@ -67,3 +70,8 @@ fclean	:	clean
 re		:	fclean all
 
 .PHONY	:	all clean fclean re
+
+.NOTPARALLEL all:
+	@if [ $(CHANGED) -eq 0 ]; then \
+		echo "$(YELLOW)Nothing to do for all.$(DEFAULT)"; \
+	fi
