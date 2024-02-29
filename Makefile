@@ -6,19 +6,20 @@
 #    By: mpitot <mpitot@student.42lyon.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/22 15:09:12 by mpitot            #+#    #+#              #
-#    Updated: 2024/02/29 15:26:24 by mpitot           ###   ########.fr        #
+#    Updated: 2024/02/29 17:52:27 by mpitot           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-SRCS	=	main.c			\
-			utils.c			\
-			init.c			\
-			print_info.c	\
-			time.c			\
-			routine_odd.c	\
-			routine_pair.c	\
-			routine_utils.c	\
-			fork_operations.c
+SRCS	=	main.c				\
+			utils.c				\
+			init.c				\
+			print_info.c		\
+			time.c				\
+			routine_odd.c		\
+			routine_pair.c		\
+			routine_utils.c		\
+			fork_operations.c	\
+			free.c
 
 OBJS	=	$(SRCS:%.c=${OBJ_D}%.o)
 
@@ -32,12 +33,15 @@ NAME	=	philo
 
 CC		=	cc
 
-FLAGS	=	-Wall -Wextra -Werror
+FLAGS	=	-Wall -Wextra -Werror #-fsanitize=address -g3
 
-GREEN	=	\033[1;32m
-BLUE	=	\033[1;34m
 RED		=	\033[1;31m
+GREEN	=	\033[1;32m
 YELLOW	=	\033[1;33m
+BLUE	=	\033[1;34m
+MAGENTA	=	\033[1;35m
+CYAN	=	\033[1;36m
+WHITE	=	\033[1;37m
 DEFAULT	=	\033[0m
 UP		=	"\033[A"
 CUT		=	"\033[K"
@@ -48,11 +52,11 @@ all		:	${NAME}
 
 ${OBJS}	:	${OBJ_D}%.o: ${SRC_D}%.c includes/philo.h
 	@echo "$(YELLOW)Compiling [$<]$(DEFAULT)"
-	@${CC} ${FLAGS} -c $< -o $@
+	@${CC} ${FLAGS} -I${HEAD} -c $< -o $@
 	@printf ${UP}${CUT}
 
 ${NAME}	:	${OBJ_D} ${OBJS} Makefile includes/philo.h
-	@${CC} ${FLAGS} -lpthread -I{HEAD} -o ${NAME} ${OBJS}
+	@${CC} ${FLAGS} -lpthread -I${HEAD} -o ${NAME} ${OBJS}
 	@$(eval CHANGED=1)
 	@echo "$(GREEN)$(NAME) compiled.$(DEFAULT)"
 
@@ -61,11 +65,11 @@ ${OBJ_D}:
 
 clean	:
 	@rm -rf ${OBJ_D}
-	@echo "$(BLUE)$(OBJ_D) deleted.$(DEFAULT)"
+	@echo "$(MAGENTA)$(OBJ_D) deleted.$(DEFAULT)"
 
 fclean	:	clean
 	@rm -f ${NAME}
-	@echo "$(BLUE)$(NAME) deleted.$(DEFAULT)"
+	@echo "$(MAGENTA)$(NAME) deleted.$(DEFAULT)"
 
 re		:	fclean all
 
@@ -73,5 +77,5 @@ re		:	fclean all
 
 .NOTPARALLEL all:
 	@if [ $(CHANGED) -eq 0 ]; then \
-		echo "$(YELLOW)Nothing to do for all.$(DEFAULT)"; \
+		echo "$(YELLOW)Nothing to be done for $(NAME).$(DEFAULT)"; \
 	fi

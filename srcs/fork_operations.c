@@ -6,15 +6,14 @@
 /*   By: mpitot <mpitot@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 18:08:06 by mpitot            #+#    #+#             */
-/*   Updated: 2024/02/29 12:30:30 by mpitot           ###   ########.fr       */
+/*   Updated: 2024/02/29 15:59:21 by mpitot           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/philo.h"
+#include "philo.h"
 
 int	ft_try_lfork(t_philo *philo)
 {
-	write(1, "a", 1);
 	pthread_mutex_lock(philo->l_fork->mutex);
 	if (philo->l_fork->owner == 0)
 	{
@@ -40,4 +39,3 @@ int	ft_try_rfork(t_philo *philo)
 		return (0);
 	return (philo->id);
 }
-

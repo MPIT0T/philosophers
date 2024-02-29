@@ -6,11 +6,11 @@
 /*   By: mpitot <mpitot@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 15:33:48 by mpitot            #+#    #+#             */
-/*   Updated: 2024/02/29 12:43:25 by mpitot           ###   ########.fr       */
+/*   Updated: 2024/02/29 18:29:35 by mpitot           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/philo.h"
+#include "philo.h"
 
 int	ft_init_threads(t_data *data)
 {
@@ -51,6 +51,9 @@ int	ft_init_mutexes(t_data *data)
 	i = -1;
 	while (++i < data->nb_philo)
 	{
+		data->forks[i].owner = 0;
+		data->forks[i].mutex = malloc(sizeof(pthread_mutex_t));
+		if ()
 		if (pthread_mutex_init(data->forks[i].mutex, NULL))
 			return (error_msg(4), 1);
 	}
@@ -59,7 +62,6 @@ int	ft_init_mutexes(t_data *data)
 
 void	ft_fill_structs(t_data *data, t_philo *philo, size_t i)
 {
-	data->forks[i].owner = 0;
 	(*philo).id = (int) i + 1;
 	(*philo).l_fork = &data->forks[i];
 	(*philo).r_fork = &data->forks[(i + 1) % data->nb_philo];
