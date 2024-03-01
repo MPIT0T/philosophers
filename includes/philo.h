@@ -6,7 +6,7 @@
 /*   By: mpitot <mpitot@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 15:10:44 by mpitot            #+#    #+#             */
-/*   Updated: 2024/02/29 18:22:01 by mpitot           ###   ########.fr       */
+/*   Updated: 2024/03/01 15:22:35 by mpitot           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ typedef struct s_philo
 	bool			alive;
 	long long		last_meal;
 	struct s_data	*data;
-	bool			ready;
 }	t_philo;
 
 typedef struct s_fork
@@ -53,6 +52,8 @@ typedef struct s_data
 	long long		first_time;
 	size_t			max_meals;
 	bool			dead;
+	pthread_mutex_t	*ready;
+	pthread_mutex_t *time;
 }	t_data;
 
 
@@ -85,7 +86,7 @@ void		error_msg(int error);
 void		ft_putstr_fd(const char *s, int fd);
 
 //TIME
-long long	ft_get_time(void);
+long long	ft_get_time(t_data *data);
 void		ft_usleep(t_philo *philo, long long time);
 
 #endif

@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "philo.h"
+/*
 
 bool	everyone_ready(t_data **data)
 {
@@ -24,6 +25,7 @@ bool	everyone_ready(t_data **data)
 	}
 	return (true);
 }
+*/
 
 void	ft_sleep(t_philo *philo)
 {

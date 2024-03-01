@@ -6,7 +6,7 @@
 /*   By: mpitot <mpitot@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 15:33:33 by mpitot            #+#    #+#             */
-/*   Updated: 2024/02/28 18:00:35 by mpitot           ###   ########.fr       */
+/*   Updated: 2024/03/01 15:22:35 by mpitot           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,14 +16,15 @@ static int	ft_eat_pair(t_philo *philo)
 {
 	while (!ft_try_rfork(philo))
 	{
-		if (ft_get_time() - philo->last_meal > philo->data->time_to_die)
+		if (ft_get_time(philo->data) - philo->last_meal > philo->data->time_to_die)
 			return (ft_put_info(philo, "has died"), 1);
 	}
 	while (!ft_try_lfork(philo))
 	{
-		if (ft_get_time() - philo->last_meal > philo->data->time_to_die)
+		if (ft_get_time(philo->data) - philo->last_meal > philo->data->time_to_die)
 			return (ft_put_info(philo, "has died"), 1);
 	}
+	philo->last_meal = ft_get_time(philo->data);
 	ft_put_info(philo, "is eating");
 	ft_usleep(philo, philo->data->time_to_eat);
 	pthread_mutex_lock(philo->r_fork->mutex);
@@ -40,9 +41,8 @@ void	*ft_routine_pair(void *arg)
 	t_philo	*philo;
 
 	philo = (t_philo *)arg;
-	/*pthread_mutex_lock(philo->data->print);
-	printf("philo->data->nb_philo = %ld\n", philo->data->nb_philo);
-	pthread_mutex_unlock(philo->data->print);*/
+	pthread_mutex_lock(philo->data->ready);
+	pthread_mutex_unlock(philo->data->ready);
 	while (philo->alive)
 	{
 		ft_eat_pair(philo);

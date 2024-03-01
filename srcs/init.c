@@ -6,7 +6,7 @@
 /*   By: mpitot <mpitot@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 15:33:48 by mpitot            #+#    #+#             */
-/*   Updated: 2024/02/29 18:29:35 by mpitot           ###   ########.fr       */
+/*   Updated: 2024/03/01 16:26:29 by mpitot           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ int	ft_init_threads(t_data *data)
 	size_t	i;
 
 	i = -1;
+	pthread_mutex_lock(data->ready);
 	while (++i < data->nb_philo)
 	{
 		if (i % 2 == 0)
@@ -30,6 +31,9 @@ int	ft_init_threads(t_data *data)
 				return (error_msg(1), 1);
 		}
 	}
+	data->first_time = 0;
+	data->first_time = ft_get_time(data);
+	pthread_mutex_unlock(data->ready);
 	return (0);
 }
 
@@ -48,12 +52,16 @@ int	ft_init_mutexes(t_data *data)
 {
 	size_t	i;
 
+	data->ready = malloc(sizeof(pthread_mutex_t));
+	data->print = malloc(sizeof(pthread_mutex_t));
+	data->time = malloc(sizeof(pthread_mutex_t));
+	if (pthread_mutex_init(data->ready, NULL) || pthread_mutex_init(data->print, NULL))
+		return (error_msg(4), 1);
 	i = -1;
 	while (++i < data->nb_philo)
 	{
 		data->forks[i].owner = 0;
 		data->forks[i].mutex = malloc(sizeof(pthread_mutex_t));
-		if ()
 		if (pthread_mutex_init(data->forks[i].mutex, NULL))
 			return (error_msg(4), 1);
 	}
@@ -68,16 +76,18 @@ void	ft_fill_structs(t_data *data, t_philo *philo, size_t i)
 	(*philo).alive = true;
 	(*philo).last_meal = 0;
 	(*philo).data = data;
-	(*philo).ready = false;
 }
 
 int	ft_init(t_data *data, int argc, char **argv)
 {
 	size_t	i;
 	long long first_time;
+	struct timeval tv;
 
 	(void) argc;
-	first_time = ft_get_time();
+	gettimeofday(&tv, NULL);
+	first_time = tv.tv_usec / 1000 + tv.tv_sec * 1000;
+	printf("first_time: %lli\n", first_time);
 	data->nb_philo = ft_atoi(argv[1]);
 	ft_malloc_structs(data);
 	i = -1;
@@ -89,7 +99,6 @@ int	ft_init(t_data *data, int argc, char **argv)
 	data->max_meals = 0;
 	if (argc == 6)
 		data->max_meals = atoi(argv[5]);
-	data->first_time = first_time;
 	data->dead = false;
 	ft_init_mutexes(data);
 	return (0);

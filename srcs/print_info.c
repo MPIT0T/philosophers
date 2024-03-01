@@ -6,7 +6,7 @@
 /*   By: mpitot <mpitot@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 15:29:44 by mpitot            #+#    #+#             */
-/*   Updated: 2024/02/27 17:16:56 by mpitot           ###   ########.fr       */
+/*   Updated: 2024/03/01 15:50:44 by mpitot           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	ft_put_info(t_philo *philo, const char *str)
 {
 	long long	time_in_ms;
 
-	time_in_ms = ft_get_time() - philo->data->first_time;
+	time_in_ms = ft_get_time(philo->data);
 	pthread_mutex_lock(philo->data->print);
 	printf("%lli %d %s\n", time_in_ms, philo->id, str);
 	pthread_mutex_unlock(philo->data->print);
