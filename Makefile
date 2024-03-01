@@ -6,7 +6,7 @@
 #    By: mpitot <mpitot@student.42lyon.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/22 15:09:12 by mpitot            #+#    #+#              #
-#    Updated: 2024/03/01 15:32:32 by mpitot           ###   ########.fr        #
+#    Updated: 2024/03/01 20:27:25 by mpitot           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -48,31 +48,50 @@ CUT		=	"\033[K"
 
 CHANGED	=	0
 
+NUM_SRCS := $(words $(SRCS))
+COMPILED_SRCS := 0
+
+define print_progress
+	@echo "$(YELLOW)Compiling $(WHITE)[$(BLUE)$1$(WHITE)]...$(DEFAULT)\r"
+endef
+
+define update_progress
+	$(eval COMPILED_SRCS := $(shell echo $$(($(COMPILED_SRCS) + 1))))
+	$(eval PROGRESS := $(shell echo $$((($(COMPILED_SRCS) * 100) / $(NUM_SRCS)))))
+	@printf ${UP}${CUT}
+	@if [ $(PROGRESS) -eq 100 ]; then \
+		echo "$(WHITE)<$(GREEN)$(PROGRESS)%$(WHITE)> $(YELLOW)Compiled $(WHITE)[$(BLUE)$1$(WHITE)]$(DEFAULT)\r"; \
+	else \
+		echo "$(WHITE) <$(GREEN)$(PROGRESS)%$(WHITE)> $(YELLOW)Compiled $(WHITE)[$(BLUE)$1$(WHITE)]$(DEFAULT)\r"; \
+	fi
+endef
+
 all		:	${NAME}
 
 ${OBJS}	:	${OBJ_D}%.o: ${SRC_D}%.c includes/philo.h
-	@echo "$(YELLOW)Compiling [$<]$(DEFAULT)"
+	@$(call print_progress,$<)
 	@${CC} ${FLAGS} -I${HEAD} -c $< -o $@
-	@printf ${UP}${CUT}
-	@echo "$(GREEN)[$<] compiled.$(DEFAULT)"
+	@$(call update_progress,$<)
 
 ${NAME}	:	${OBJ_D} ${OBJS} Makefile includes/philo.h
-	@echo "$(YELLOW)Compiling '$(NAME)'...$(DEFAULT)"
+	@echo ""
+	@echo "$(YELLOW)Compiling $(WHITE)[$(BLUE)$(NAME)$(WHITE)]...$(DEFAULT)"
 	@${CC} ${FLAGS} -lpthread -I${HEAD} -o ${NAME} ${OBJS}
 	@$(eval CHANGED=1)
 	@printf ${UP}${CUT}
-	@echo "$(GREEN)'$(NAME)' compiled.$(DEFAULT)"
+	@echo "$(WHITE)[$(CYAN)$(NAME)$(WHITE)] $(GREEN)compiled.$(DEFAULT)"
+	@echo ""
 
 ${OBJ_D}:
 	@mkdir -p ${OBJ_D}
 
 clean	:
 	@rm -rf ${OBJ_D}
-	@echo "$(MAGENTA)'$(OBJ_D)' deleted.$(DEFAULT)"
+	@echo "$(WHITE)[$(RED)$(OBJ_D)$(WHITE)] $(RED)deleted.$(DEFAULT)"
 
 fclean	:	clean
 	@rm -f ${NAME}
-	@echo "$(MAGENTA)'$(NAME)' deleted.$(DEFAULT)"
+	@echo "$(WHITE)[$(RED)$(NAME)$(WHITE)] $(RED)deleted.$(DEFAULT)"
 
 re		:	fclean all
 
@@ -80,5 +99,5 @@ re		:	fclean all
 
 .NOTPARALLEL all:
 	@if [ $(CHANGED) -eq 0 ]; then \
-		echo "$(YELLOW)Nothing to be done for '$(NAME)'.$(DEFAULT)"; \
+		echo "$(YELLOW)Nothing to be done for $(WHITE)[$(BLUE)$(NAME)$(WHITE)].$(DEFAULT)"; \
 	fi
