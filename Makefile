@@ -51,6 +51,12 @@ CHANGED	=	0
 NUM_SRCS := $(words $(SRCS))
 COMPILED_SRCS := 0
 
+define erase_messages
+	for i in `seq 1 $(NUM_SRCS)`; do \
+		printf ${UP}${CUT}; \
+	done
+endef
+
 define print_progress
 	@echo "$(YELLOW)Compiling $(WHITE)[$(BLUE)$1$(WHITE)]...$(DEFAULT)\r"
 endef
@@ -74,13 +80,12 @@ ${OBJS}	:	${OBJ_D}%.o: ${SRC_D}%.c includes/philo.h
 	@$(call update_progress,$<)
 
 ${NAME}	:	${OBJ_D} ${OBJS} Makefile includes/philo.h
-	@echo ""
+	@$(call erase_messages)
 	@echo "$(YELLOW)Compiling $(WHITE)[$(BLUE)$(NAME)$(WHITE)]...$(DEFAULT)"
 	@${CC} ${FLAGS} -lpthread -I${HEAD} -o ${NAME} ${OBJS}
 	@$(eval CHANGED=1)
 	@printf ${UP}${CUT}
 	@echo "$(WHITE)[$(CYAN)$(NAME)$(WHITE)] $(GREEN)compiled.$(DEFAULT)"
-	@echo ""
 
 ${OBJ_D}:
 	@mkdir -p ${OBJ_D}
