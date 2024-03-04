@@ -6,7 +6,7 @@
 /*   By: mpitot <mpitot@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 15:10:44 by mpitot            #+#    #+#             */
-/*   Updated: 2024/03/01 15:22:35 by mpitot           ###   ########.fr       */
+/*   Updated: 2024/03/04 18:54:45 by mpitot           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,10 @@ typedef struct s_philo
 	int				id;
 	struct s_fork	*l_fork;
 	struct s_fork	*r_fork;
+	pthread_mutex_t	*m_alive;
 	bool			alive;
 	long long		last_meal;
+	pthread_mutex_t	*m_last_meal;
 	struct s_data	*data;
 }	t_philo;
 
@@ -52,6 +54,7 @@ typedef struct s_data
 	long long		first_time;
 	size_t			max_meals;
 	bool			dead;
+	pthread_mutex_t	*m_dead;
 	pthread_mutex_t	*ready;
 	pthread_mutex_t *time;
 }	t_data;
@@ -64,9 +67,11 @@ void		*ft_routine_pair(void *arg);
 void		*ft_routine_odd(void *arg);
 	//utils
 int			ft_try_lfork(t_philo *philo);
+int			ft_release_lfork(t_philo *philo);
+int			ft_release_rfork(t_philo *philo);
 int			ft_try_rfork(t_philo *philo);
-bool		everyone_ready(t_data **data);
-void		ft_sleep(t_philo *philo);
+int			ft_sleep(t_philo *philo);
+bool	ft_dead(t_data *data);
 
 
 //UTILS
@@ -87,6 +92,6 @@ void		ft_putstr_fd(const char *s, int fd);
 
 //TIME
 long long	ft_get_time(t_data *data);
-void		ft_usleep(t_philo *philo, long long time);
+int			ft_usleep(t_philo *philo, long long time);
 
 #endif

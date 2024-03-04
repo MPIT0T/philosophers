@@ -6,7 +6,7 @@
 /*   By: mpitot <mpitot@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 18:08:06 by mpitot            #+#    #+#             */
-/*   Updated: 2024/02/29 15:59:21 by mpitot           ###   ########.fr       */
+/*   Updated: 2024/03/04 13:18:58 by mpitot           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,28 +14,46 @@
 
 int	ft_try_lfork(t_philo *philo)
 {
-	pthread_mutex_lock(philo->l_fork->mutex);
 	if (philo->l_fork->owner == 0)
 	{
+		pthread_mutex_lock(philo->l_fork->mutex);
 		philo->l_fork->owner = philo->id;
 		ft_put_info(philo, "has taken a fork");
+		pthread_mutex_unlock(philo->l_fork->mutex);
+
 	}
-	pthread_mutex_unlock(philo->l_fork->mutex);
-	if (philo->l_fork->owner != philo->id)
+	else
 		return (0);
 	return (philo->id);
 }
 
 int	ft_try_rfork(t_philo *philo)
 {
-	pthread_mutex_lock(philo->r_fork->mutex);
 	if (philo->r_fork->owner == 0)
 	{
+		pthread_mutex_lock(philo->r_fork->mutex);
 		philo->r_fork->owner = philo->id;
 		ft_put_info(philo, "has taken a fork");
+		pthread_mutex_unlock(philo->r_fork->mutex);
+
 	}
-	pthread_mutex_unlock(philo->r_fork->mutex);
-	if (philo->r_fork->owner != philo->id)
+	else
 		return (0);
 	return (philo->id);
+}
+
+int	ft_release_lfork(t_philo *philo)
+{
+	pthread_mutex_lock(philo->l_fork->mutex);
+	philo->l_fork->owner = 0;
+	pthread_mutex_unlock(philo->l_fork->mutex);
+	return (0);
+}
+
+int	ft_release_rfork(t_philo *philo)
+{
+	pthread_mutex_lock(philo->r_fork->mutex);
+	philo->r_fork->owner = 0;
+	pthread_mutex_unlock(philo->r_fork->mutex);
+	return (0);
 }

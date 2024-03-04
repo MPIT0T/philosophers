@@ -6,7 +6,7 @@
 #    By: mpitot <mpitot@student.42lyon.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/22 15:09:12 by mpitot            #+#    #+#              #
-#    Updated: 2024/03/04 10:01:38 by mpitot           ###   ########.fr        #
+#    Updated: 2024/03/04 18:52:20 by mpitot           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,7 +33,7 @@ NAME	=	philo
 
 CC		=	cc
 
-FLAGS	=	-Wall -Wextra -Werror #-fsanitize=address -g3
+FLAGS	=	-Wall -Wextra -Werror -g3
 
 RED		=	\033[1;31m
 GREEN	=	\033[1;32m
@@ -70,6 +70,8 @@ define update_progress
 	fi
 endef
 
+#-L/var/lib/flatpak/runtime/org.freedesktop.Sdk/x86_64/23.08/2f00425aee448b08810bf671103aef1140d844be0cc88bac7a8c6b6145d16455/files/lib/x86_64-linux-gnu
+
 all		:	${NAME}
 
 ${OBJS}	:	${OBJ_D}%.o: ${SRC_D}%.c includes/philo.h
@@ -79,7 +81,7 @@ ${OBJS}	:	${OBJ_D}%.o: ${SRC_D}%.c includes/philo.h
 
 ${NAME}	:	${OBJ_D} ${OBJS} Makefile includes/philo.h
 	@echo "$(YELLOW)Compiling $(WHITE)[$(BLUE)$(NAME)$(WHITE)]...$(DEFAULT)"
-	@${CC} ${FLAGS} -lpthread -I${HEAD} -o ${NAME} ${OBJS}
+	@${CC} ${FLAGS} -pthread -lpthread -I${HEAD} -o ${NAME} ${OBJS}
 	@$(eval CHANGED=1)
 	@printf ${UP}${CUT}
 	@echo "$(WHITE)<$(GREEN)100%$(WHITE)> [$(CYAN)$(NAME)$(WHITE)] $(GREEN)compiled.$(DEFAULT)"

@@ -6,29 +6,26 @@
 /*   By: mpitot <mpitot@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 15:40:24 by mpitot            #+#    #+#             */
-/*   Updated: 2024/02/28 18:00:35 by mpitot           ###   ########.fr       */
+/*   Updated: 2024/03/04 14:22:33 by mpitot           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-/*
 
-bool	everyone_ready(t_data **data)
-{
-	size_t i;
-
-	i = -1;
-	while (++i < (*data)->nb_philo)
-	{
-		if (!(*data)->philo[i].ready)
-			return (false);
-	}
-	return (true);
-}
-*/
-
-void	ft_sleep(t_philo *philo)
+int	ft_sleep(t_philo *philo)
 {
 	ft_put_info(philo, "is sleeping");
-	ft_usleep(philo, philo->data->time_to_sleep);
+	if (ft_usleep(philo, philo->data->time_to_sleep))
+		return (1);
+	return (0);
+}
+
+bool	ft_dead(t_data *data)
+{
+	bool	x;
+
+	pthread_mutex_lock(data->m_dead);
+	x = data->m_dead;
+	pthread_mutex_unlock(data->m_dead);
+	return (x);
 }

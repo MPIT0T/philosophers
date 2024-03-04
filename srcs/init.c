@@ -6,7 +6,7 @@
 /*   By: mpitot <mpitot@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 15:33:48 by mpitot            #+#    #+#             */
-/*   Updated: 2024/03/01 16:26:29 by mpitot           ###   ########.fr       */
+/*   Updated: 2024/03/04 16:12:20 by mpitot           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,12 @@ int	ft_init_threads(t_data *data)
 				return (error_msg(1), 1);
 		}
 	}
+	pthread_mutex_unlock(data->ready);
 	data->first_time = 0;
 	data->first_time = ft_get_time(data);
-	pthread_mutex_unlock(data->ready);
+	i = -1;
+	while (++i < data->nb_philo)
+		pthread_join(data->philo[i].thread, NULL);
 	return (0);
 }
 
@@ -55,14 +58,17 @@ int	ft_init_mutexes(t_data *data)
 	data->ready = malloc(sizeof(pthread_mutex_t));
 	data->print = malloc(sizeof(pthread_mutex_t));
 	data->time = malloc(sizeof(pthread_mutex_t));
-	if (pthread_mutex_init(data->ready, NULL) || pthread_mutex_init(data->print, NULL))
+	data->m_dead = malloc(sizeof(pthread_mutex_t));
+	if (pthread_mutex_init(data->ready, NULL) || pthread_mutex_init(data->print, NULL) || pthread_mutex_init(data->m_dead, NULL))
 		return (error_msg(4), 1);
 	i = -1;
 	while (++i < data->nb_philo)
 	{
 		data->forks[i].owner = 0;
 		data->forks[i].mutex = malloc(sizeof(pthread_mutex_t));
-		if (pthread_mutex_init(data->forks[i].mutex, NULL))
+		data->philo[i].m_alive = malloc(sizeof(pthread_mutex_t));
+		data->philo[i].m_last_meal = malloc(sizeof(pthread_mutex_t));
+		if (pthread_mutex_init(data->forks[i].mutex, NULL) || pthread_mutex_init(data->philo[i].m_alive, NULL) || pthread_mutex_init(data->philo[i].m_last_meal, NULL))
 			return (error_msg(4), 1);
 	}
 	return (0);
@@ -81,13 +87,8 @@ void	ft_fill_structs(t_data *data, t_philo *philo, size_t i)
 int	ft_init(t_data *data, int argc, char **argv)
 {
 	size_t	i;
-	long long first_time;
-	struct timeval tv;
 
 	(void) argc;
-	gettimeofday(&tv, NULL);
-	first_time = tv.tv_usec / 1000 + tv.tv_sec * 1000;
-	printf("first_time: %lli\n", first_time);
 	data->nb_philo = ft_atoi(argv[1]);
 	ft_malloc_structs(data);
 	i = -1;

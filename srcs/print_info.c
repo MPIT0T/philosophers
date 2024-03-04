@@ -6,7 +6,7 @@
 /*   By: mpitot <mpitot@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 15:29:44 by mpitot            #+#    #+#             */
-/*   Updated: 2024/03/01 15:50:44 by mpitot           ###   ########.fr       */
+/*   Updated: 2024/03/04 13:21:23 by mpitot           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,8 @@ void	error_msg(int error)
 		ft_putstr_fd("Error:\n\tmutex unlock failed\n", 2);
 	else if (error == 8)
 		ft_putstr_fd("Error:\n\tmutex destroy failed\n", 2);
+	else if (error == 9)
+		ft_putstr_fd("Error\n\tthread join failed\n", 2);
 }
 
 void	ft_putstr_fd(const char *s, int fd)
