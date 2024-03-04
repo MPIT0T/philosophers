@@ -6,7 +6,7 @@
 #    By: mpitot <mpitot@student.42lyon.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/22 15:09:12 by mpitot            #+#    #+#              #
-#    Updated: 2024/03/01 20:27:25 by mpitot           ###   ########.fr        #
+#    Updated: 2024/03/04 10:01:38 by mpitot           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -48,14 +48,8 @@ CUT		=	"\033[K"
 
 CHANGED	=	0
 
-NUM_SRCS := $(words $(SRCS))
+NUM_SRCS := $(words $(SRCS) + 1)
 COMPILED_SRCS := 0
-
-define erase_messages
-	for i in `seq 1 $(NUM_SRCS)`; do \
-		printf ${UP}${CUT}; \
-	done
-endef
 
 define print_progress
 	@echo "$(YELLOW)Compiling $(WHITE)[$(BLUE)$1$(WHITE)]...$(DEFAULT)\r"
@@ -66,9 +60,13 @@ define update_progress
 	$(eval PROGRESS := $(shell echo $$((($(COMPILED_SRCS) * 100) / $(NUM_SRCS)))))
 	@printf ${UP}${CUT}
 	@if [ $(PROGRESS) -eq 100 ]; then \
-		echo "$(WHITE)<$(GREEN)$(PROGRESS)%$(WHITE)> $(YELLOW)Compiled $(WHITE)[$(BLUE)$1$(WHITE)]$(DEFAULT)\r"; \
+		echo "$(WHITE)<$(GREEN)$(PROGRESS)%$(WHITE)> $(WHITE)[$(BLUE)$1$(WHITE)] $(YELLOW)compiled.$(DEFAULT)\r"; \
 	else \
-		echo "$(WHITE) <$(GREEN)$(PROGRESS)%$(WHITE)> $(YELLOW)Compiled $(WHITE)[$(BLUE)$1$(WHITE)]$(DEFAULT)\r"; \
+		if [ $(PROGRESS) -lt 10 ]; then \
+			echo "$(WHITE)<  $(GREEN)$(PROGRESS)%$(WHITE)> $(WHITE)[$(BLUE)$1$(WHITE)] $(YELLOW)compiled.$(DEFAULT)\r"; \
+		else \
+			echo "$(WHITE)< $(GREEN)$(PROGRESS)%$(WHITE)> $(WHITE)[$(BLUE)$1$(WHITE)] $(YELLOW)compiled.$(DEFAULT)\r"; \
+		fi \
 	fi
 endef
 
@@ -80,29 +78,35 @@ ${OBJS}	:	${OBJ_D}%.o: ${SRC_D}%.c includes/philo.h
 	@$(call update_progress,$<)
 
 ${NAME}	:	${OBJ_D} ${OBJS} Makefile includes/philo.h
-	@$(call erase_messages)
 	@echo "$(YELLOW)Compiling $(WHITE)[$(BLUE)$(NAME)$(WHITE)]...$(DEFAULT)"
 	@${CC} ${FLAGS} -lpthread -I${HEAD} -o ${NAME} ${OBJS}
 	@$(eval CHANGED=1)
 	@printf ${UP}${CUT}
-	@echo "$(WHITE)[$(CYAN)$(NAME)$(WHITE)] $(GREEN)compiled.$(DEFAULT)"
+	@echo "$(WHITE)<$(GREEN)100%$(WHITE)> [$(CYAN)$(NAME)$(WHITE)] $(GREEN)compiled.$(DEFAULT)"
 
 ${OBJ_D}:
 	@mkdir -p ${OBJ_D}
 
 clean	:
+	@echo "Cleaning $(WHITE)[$(RED)$(NAME)$(WHITE)]...$(DEFAULT)"
 	@rm -rf ${OBJ_D}
 	@echo "$(WHITE)[$(RED)$(OBJ_D)$(WHITE)] $(RED)deleted.$(DEFAULT)"
 
-fclean	:	clean
+fclean	:
+	@echo "FCleaning $(WHITE)[$(RED)$(NAME)$(WHITE)]...$(DEFAULT)"
+	@rm -rf ${OBJ_D}
+	@echo "$(WHITE)[$(RED)$(OBJ_D)$(WHITE)] $(RED)deleted.$(DEFAULT)"
 	@rm -f ${NAME}
 	@echo "$(WHITE)[$(RED)$(NAME)$(WHITE)] $(RED)deleted.$(DEFAULT)"
 
-re		:	fclean all
+re		:	fclean .internal_separate all
 
 .PHONY	:	all clean fclean re
 
 .NOTPARALLEL all:
 	@if [ $(CHANGED) -eq 0 ]; then \
-		echo "$(YELLOW)Nothing to be done for $(WHITE)[$(BLUE)$(NAME)$(WHITE)].$(DEFAULT)"; \
+		echo "$(YELLOW)Nothing to be done for $(WHITE)[$(CYAN)$(NAME)$(WHITE)].$(DEFAULT)"; \
 	fi
+
+.internal_separate	:
+	@echo "$(WHITE)------------------------------------------------------------$(DEFAULT)"
