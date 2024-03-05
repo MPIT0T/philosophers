@@ -6,7 +6,7 @@
 #    By: mpitot <mpitot@student.42lyon.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/22 15:09:12 by mpitot            #+#    #+#              #
-#    Updated: 2024/03/04 19:43:09 by mpitot           ###   ########.fr        #
+#    Updated: 2024/03/05 20:24:52 by mpitot           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -70,28 +70,33 @@ define update_progress
 	fi
 endef
 
-define progress_bar
-	$(eval COMPILED_SRCS := $(shell echo $$(($(COMPILED_SRCS) + 1))))
-	$(eval PROGRESS := $(shell echo $$((($(COMPILED_SRCS) * 60) / $(NUM_SRCS)))))
-	@echo -n "$(WHITE)[$(GREEN)"
-	@for i in $$(seq 1 $(PROGRESS)); do \
-		echo -n "#"; \
-	done
-	echo "$(WHITE)"
-	@for i in $$(seq 1 $$(($(NUM_SRCS) - $(PROGRESS)))); do \
-		echo -n "_"; \
-	done
-	@echo -n "]$(DEFAULT)"
-endef
+#define progress_bar
+#	@if [ $(COMPILED_SRCS) -eq 0 ]; then \
+#		echo -n "$(WHITE)[$(GREEN)"; \
+#	else \
+#		printf ${UP}${CUT}; \
+#		echo -n "$(WHITE)[$(GREEN)"; \
+#	fi
+#	$(eval COMPILED_SRCS := $(shell echo $$(($(COMPILED_SRCS) + 1))))
+#	$(eval PROGRESS := $(shell echo $$((($(COMPILED_SRCS))))))
+#	@for i in $$(seq 1 $(PROGRESS)); do \
+#		echo -n "#"; \
+#	done
+#	echo "$(WHITE)"
+#	@for i in $$(seq 1 $$(($(NUM_SRCS) - $(PROGRESS)))); do \
+#		echo -n "_"; \
+#	done
+#	@echo -n "]$(DEFAULT)"
+#endef
 
 #-L/var/lib/flatpak/runtime/org.freedesktop.Sdk/x86_64/23.08/2f00425aee448b08810bf671103aef1140d844be0cc88bac7a8c6b6145d16455/files/lib/x86_64-linux-gnu
 
 all		:	${NAME}
 
 ${OBJS}	:	${OBJ_D}%.o: ${SRC_D}%.c includes/philo.h
+	@$(call print_progress,$<)
 	@${CC} ${FLAGS} -I${HEAD} -c $< -o $@
-	@printf ${UP}${CUT}
-	@$(call progress_bar)
+	@$(call update_progress,$<)
 
 ${NAME}	:	${OBJ_D} ${OBJS} Makefile includes/philo.h
 	@echo "$(YELLOW)Compiling $(WHITE)[$(BLUE)$(NAME)$(WHITE)]...$(DEFAULT)"
@@ -109,7 +114,7 @@ clean	:
 	@echo "$(WHITE)[$(RED)$(OBJ_D)$(WHITE)] $(RED)deleted.$(DEFAULT)"
 
 fclean	:
-	@echo "FCleaning $(WHITE)[$(RED)$(NAME)$(WHITE)]...$(DEFAULT)"
+	@echo "F***ing-Cleaning $(WHITE)[$(RED)$(NAME)$(WHITE)]...$(DEFAULT)"
 	@rm -rf ${OBJ_D}
 	@echo "$(WHITE)[$(RED)$(OBJ_D)$(WHITE)] $(RED)deleted.$(DEFAULT)"
 	@rm -f ${NAME}

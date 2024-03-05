@@ -6,20 +6,37 @@
 /*   By: mpitot <mpitot@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 15:29:44 by mpitot            #+#    #+#             */
-/*   Updated: 2024/03/04 13:21:23 by mpitot           ###   ########.fr       */
+/*   Updated: 2024/03/05 19:16:36 by mpitot           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void	ft_put_info(t_philo *philo, const char *str)
+void	ft_print_info(t_philo *philo, long long time_in_ms, char *str)
+{
+	pthread_mutex_lock(philo->data->print);
+	printf(str, time_in_ms, philo->id, str);
+	pthread_mutex_unlock(philo->data->print);
+}
+
+void	ft_put_info(t_philo *philo, enum e_action action)
 {
 	long long	time_in_ms;
 
 	time_in_ms = ft_get_time(philo->data);
-	pthread_mutex_lock(philo->data->print);
-	printf("%lli %d %s\n", time_in_ms, philo->id, str);
-	pthread_mutex_unlock(philo->data->print);
+	if (action == FORK)
+		ft_print_info(philo, time_in_ms, "%lli \033[1;36m%d \033[1;32mhas taken a fork\033[0m\n");
+	else if (action == EAT)
+		ft_print_info(philo, time_in_ms, "%lli \033[1;36m%d \033[1;32mis eating\033[0m\n");
+	else if (action == SLEEP)
+		ft_print_info(philo, time_in_ms, "%lli \033[1;36m%d \033[1;32mis sleeping\033[0m\n");
+	else if (action == THINK)
+		ft_print_info(philo, time_in_ms, "%lli \033[1;36m%d \033[1;32mis thinking\033[0m\n");
+	else if (action == DIE)
+	{
+		ft_print_info(philo, time_in_ms, "%lli \033[1;36m%d \033[1;31mhas died\033[0m\n");
+
+	}
 }
 
 void	error_msg(int error)

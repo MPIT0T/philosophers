@@ -6,7 +6,7 @@
 /*   By: mpitot <mpitot@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 15:33:48 by mpitot            #+#    #+#             */
-/*   Updated: 2024/03/04 16:12:20 by mpitot           ###   ########.fr       */
+/*   Updated: 2024/03/05 15:03:08 by mpitot           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,9 @@ int	ft_init_threads(t_data *data)
 				return (error_msg(1), 1);
 		}
 	}
-	pthread_mutex_unlock(data->ready);
 	data->first_time = 0;
 	data->first_time = ft_get_time(data);
+	pthread_mutex_unlock(data->ready);
 	i = -1;
 	while (++i < data->nb_philo)
 		pthread_join(data->philo[i].thread, NULL);
@@ -82,6 +82,7 @@ void	ft_fill_structs(t_data *data, t_philo *philo, size_t i)
 	(*philo).alive = true;
 	(*philo).last_meal = 0;
 	(*philo).data = data;
+	(*philo).meals = 0;
 }
 
 int	ft_init(t_data *data, int argc, char **argv)

@@ -6,7 +6,7 @@
 /*   By: mpitot <mpitot@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 15:10:44 by mpitot            #+#    #+#             */
-/*   Updated: 2024/03/04 19:03:10 by mpitot           ###   ########.fr       */
+/*   Updated: 2024/03/05 14:53:03 by mpitot           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,26 @@
 # include <sys/time.h>
 # include <stdbool.h>
 
+//RED		"\033[1;31m"
+//GREEN		"\033[1;32m"
+//YELLOW	"\033[1;33m"
+//BLUE		"\033[1;34m"
+//MAGENTA	"\033[1;35m"
+//CYAN		"\033[1;36m"
+//WHITE		"\033[1;37m"
+//DEFAULT	"\033[0m"
+
 struct s_data;
 struct s_fork;
+
+enum	e_action
+{
+	FORK,
+	EAT,
+	SLEEP,
+	THINK,
+	DIE
+};
 
 typedef struct s_philo
 {
@@ -34,6 +52,7 @@ typedef struct s_philo
 	long long		last_meal;
 	pthread_mutex_t	*m_last_meal;
 	struct s_data	*data;
+	size_t			meals;
 }	t_philo;
 
 typedef struct s_fork
@@ -86,7 +105,7 @@ void		ft_fill_structs(t_data *data, t_philo *philo, size_t i);
 int			ft_init_mutexes(t_data *data);
 
 //PRINT
-void		ft_put_info(t_philo *philo, const char *str);
+void		ft_put_info(t_philo *philo, enum e_action action);
 void		error_msg(int error);
 void		ft_putstr_fd(const char *s, int fd);
 

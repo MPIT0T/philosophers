@@ -18,7 +18,7 @@ int	ft_try_lfork(t_philo *philo)
 	{
 		pthread_mutex_lock(philo->l_fork->mutex);
 		philo->l_fork->owner = philo->id;
-		ft_put_info(philo, "has taken a fork");
+		ft_put_info(philo, FORK);
 		pthread_mutex_unlock(philo->l_fork->mutex);
 
 	}
@@ -33,7 +33,7 @@ int	ft_try_rfork(t_philo *philo)
 	{
 		pthread_mutex_lock(philo->r_fork->mutex);
 		philo->r_fork->owner = philo->id;
-		ft_put_info(philo, "has taken a fork");
+		ft_put_info(philo, FORK);
 		pthread_mutex_unlock(philo->r_fork->mutex);
 
 	}

@@ -14,7 +14,7 @@
 
 int	ft_sleep(t_philo *philo)
 {
-	ft_put_info(philo, "is sleeping");
+	ft_put_info(philo, SLEEP);
 	if (ft_usleep(philo, philo->data->time_to_sleep))
 		return (1);
 	return (0);
