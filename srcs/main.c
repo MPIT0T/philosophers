@@ -12,21 +12,39 @@
 
 #include "philo.h"
 
+int	ft_init(t_data *data, int argc, char **argv)
+{
+	size_t	i;
+
+	(void) argc;
+	data->nb_philo = ft_atol(argv[1]);
+	if (ft_malloc_structs(data))
+		return (1);
+	i = -1;
+	while (++i < data->nb_philo)
+		ft_fill_structs(data, &data->philo[i], i);
+	data->first_time = 0;
+	data->time_to_die = ft_atol(argv[2]);
+	data->time_to_eat = ft_atol(argv[3]);
+	data->time_to_sleep = ft_atol(argv[4]);
+	data->max_meals = 0;
+	if (argc == 6)
+		data->max_meals = ft_atol(argv[5]);
+	data->dead = false;
+	if (ft_init_mutexes(data))
+		return (1);
+	return (0);
+}
+
 int	main(int argc, char **argv)
 {
 	t_data data;
 
-	if (argc != 5 && argc != 6)
-		return (error_msg(1), 1);
+	if (check_args(argc, argv))
+		return (1);
 	if (ft_init(&data, argc, argv))
-	{
-		printf("Error: malloc failed\n");
 		return (1);
-	}
 	if (ft_init_threads(&data))
-	{
-		printf("Error: thread creation failed\n");
 		return (1);
-	}
 	return (0);
 }

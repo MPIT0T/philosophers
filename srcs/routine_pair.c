@@ -47,7 +47,7 @@ void	*ft_routine_pair(void *arg)
 	pthread_mutex_lock(philo->data->ready);
 	pthread_mutex_unlock(philo->data->ready);
 	while ((philo->alive && !philo->data->dead) &&
-	(philo->data->max_meals != 0 && philo->meals < philo->data->max_meals))
+	(philo->data->max_meals == 0 || philo->meals < philo->data->max_meals))
 	{
 		if (ft_eat_pair(philo))
 			break ;

@@ -6,13 +6,14 @@
 #    By: mpitot <mpitot@student.42lyon.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/22 15:09:12 by mpitot            #+#    #+#              #
-#    Updated: 2024/03/05 20:24:52 by mpitot           ###   ########.fr        #
+#    Updated: 2024/03/07 20:49:17 by mpitot           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 SRCS	=	main.c				\
 			utils.c				\
 			init.c				\
+			init2.c				\
 			print_info.c		\
 			time.c				\
 			routine_odd.c		\
@@ -70,27 +71,6 @@ define update_progress
 	fi
 endef
 
-#define progress_bar
-#	@if [ $(COMPILED_SRCS) -eq 0 ]; then \
-#		echo -n "$(WHITE)[$(GREEN)"; \
-#	else \
-#		printf ${UP}${CUT}; \
-#		echo -n "$(WHITE)[$(GREEN)"; \
-#	fi
-#	$(eval COMPILED_SRCS := $(shell echo $$(($(COMPILED_SRCS) + 1))))
-#	$(eval PROGRESS := $(shell echo $$((($(COMPILED_SRCS))))))
-#	@for i in $$(seq 1 $(PROGRESS)); do \
-#		echo -n "#"; \
-#	done
-#	echo "$(WHITE)"
-#	@for i in $$(seq 1 $$(($(NUM_SRCS) - $(PROGRESS)))); do \
-#		echo -n "_"; \
-#	done
-#	@echo -n "]$(DEFAULT)"
-#endef
-
-#-L/var/lib/flatpak/runtime/org.freedesktop.Sdk/x86_64/23.08/2f00425aee448b08810bf671103aef1140d844be0cc88bac7a8c6b6145d16455/files/lib/x86_64-linux-gnu
-
 all		:	${NAME}
 
 ${OBJS}	:	${OBJ_D}%.o: ${SRC_D}%.c includes/philo.h
@@ -100,7 +80,7 @@ ${OBJS}	:	${OBJ_D}%.o: ${SRC_D}%.c includes/philo.h
 
 ${NAME}	:	${OBJ_D} ${OBJS} Makefile includes/philo.h
 	@echo "$(YELLOW)Compiling $(WHITE)[$(BLUE)$(NAME)$(WHITE)]...$(DEFAULT)"
-	@${CC} ${FLAGS} -pthread -lpthread -I${HEAD} -o ${NAME} ${OBJS}
+	@${CC} ${FLAGS} ${OBJS} -pthread -lpthread -I${HEAD} -o ${NAME}
 	@$(eval CHANGED=1)
 	@printf ${UP}${CUT}
 	@echo "$(WHITE)<$(GREEN)100%$(WHITE)> [$(CYAN)$(NAME)$(WHITE)] $(GREEN)compiled.$(DEFAULT)"

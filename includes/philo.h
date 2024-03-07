@@ -6,7 +6,7 @@
 /*   By: mpitot <mpitot@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 15:10:44 by mpitot            #+#    #+#             */
-/*   Updated: 2024/03/05 14:53:03 by mpitot           ###   ########.fr       */
+/*   Updated: 2024/03/07 20:47:50 by mpitot           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,15 @@
 struct s_data;
 struct s_fork;
 
+typedef enum e_error
+{
+	ARGS,
+	ARG,
+	MALLOC,
+	MUTEX,
+	THREAD
+}	t_error;
+
 enum	e_action
 {
 	FORK,
@@ -43,16 +52,16 @@ enum	e_action
 
 typedef struct s_philo
 {
-	pthread_t 		thread;
 	int				id;
+	pthread_t 		thread;
 	struct s_fork	*l_fork;
 	struct s_fork	*r_fork;
-	pthread_mutex_t	*m_alive;
 	bool			alive;
+	pthread_mutex_t	*m_alive;
 	long long		last_meal;
 	pthread_mutex_t	*m_last_meal;
-	struct s_data	*data;
 	size_t			meals;
+	struct s_data	*data;
 }	t_philo;
 
 typedef struct s_fork
@@ -66,16 +75,15 @@ typedef struct s_data
 	size_t			nb_philo;
 	t_philo			*philo;
 	t_fork			*forks;
-	pthread_mutex_t	*print;
 	long long		time_to_die;
 	long long		time_to_eat;
 	long long		time_to_sleep;
 	long long		first_time;
 	size_t			max_meals;
-	bool			dead;
 	pthread_mutex_t	*m_dead;
 	pthread_mutex_t	*ready;
-	pthread_mutex_t *time;
+	pthread_mutex_t	*print;
+	bool			dead;
 }	t_data;
 
 
@@ -90,12 +98,14 @@ int			ft_release_lfork(t_philo *philo);
 int			ft_release_rfork(t_philo *philo);
 int			ft_try_rfork(t_philo *philo);
 int			ft_sleep(t_philo *philo);
-bool	ft_dead(t_data *data);
+bool		ft_dead(t_data *data);
 
 
 //UTILS
-int			ft_atoi(const char *nptr);
+long		ft_atol(const char *nptr);
 size_t		ft_strlen(const char *s);
+int			ft_isdigit(const char *str);
+int			check_args(int ac, char **av);
 
 //INIT
 int			ft_init_threads(t_data *data);
@@ -106,8 +116,9 @@ int			ft_init_mutexes(t_data *data);
 
 //PRINT
 void		ft_put_info(t_philo *philo, enum e_action action);
-void		error_msg(int error);
+void		error_msg(t_error error);
 void		ft_putstr_fd(const char *s, int fd);
+void		ft_put_eated(t_data *data);
 
 //TIME
 long long	ft_get_time(t_data *data);

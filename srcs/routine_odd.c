@@ -6,7 +6,7 @@
 /*   By: mpitot <mpitot@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 15:33:30 by mpitot            #+#    #+#             */
-/*   Updated: 2024/03/05 20:13:50 by mpitot           ###   ########.fr       */
+/*   Updated: 2024/03/06 15:43:48 by mpitot           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	*ft_routine_odd(void *arg)
 	pthread_mutex_lock(philo->data->ready);
 	pthread_mutex_unlock(philo->data->ready);
 	while ((philo->alive && !philo->data->dead) &&
-	(philo->data->max_meals != 0 && philo->meals < philo->data->max_meals))
+	(philo->data->max_meals == 0 || philo->meals < philo->data->max_meals))
 	{
 		if (ft_eat_odd(philo))
 			break ;

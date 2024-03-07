@@ -6,16 +6,30 @@
 /*   By: mpitot <mpitot@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 19:49:42 by mpitot            #+#    #+#             */
-/*   Updated: 2024/02/26 19:54:21 by mpitot           ###   ########.fr       */
+/*   Updated: 2024/03/07 20:42:13 by mpitot           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int	ft_atoi(const char *nptr)
+int	ft_isdigit(const char *str)
 {
 	size_t	i;
-	int		value;
+
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] < '0' || str[i] > '9')
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
+long	ft_atol(const char *nptr)
+{
+	size_t	i;
+	long	value;
 	int		sign;
 
 	i = 0;
@@ -46,4 +60,23 @@ size_t	ft_strlen(const char *s)
 	while (s[i])
 		i++;
 	return (i);
+}
+
+int	check_args(int ac, char **av)
+{
+	int	i;
+
+	i = 0;
+	if (ac < 5 || ac > 6)
+		return (error_msg(ARGS), 1);
+	while (++i < ac)
+	{
+		if (!ft_isdigit(av[i]))
+			return (error_msg(3), 1);
+	}
+	if (ft_atol(av[1]) < 1)
+		return (error_msg(ARG), 1);
+	if (ac == 6 && ft_atol(av[5]) < 1)
+		return (error_msg(ARG), 1);
+	return (0);
 }
