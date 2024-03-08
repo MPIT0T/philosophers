@@ -6,7 +6,7 @@
 /*   By: mpitot <mpitot@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 15:33:30 by mpitot            #+#    #+#             */
-/*   Updated: 2024/03/08 12:05:26 by mpitot           ###   ########.fr       */
+/*   Updated: 2024/03/08 16:32:39 by mpitot           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ static int	ft_eat_odd(t_philo *philo)
 		if (ft_get_time(philo->data) - philo->last_meal > philo->data->time_to_die)
 			return (ft_put_info(philo, DIE), 1);
 	}
+	philo->last_meal = ft_get_time(philo->data);
 	ft_put_info(philo, EAT);
 	ft_usleep(philo, philo->data->time_to_eat);
 	philo->last_meal = ft_get_time(philo->data);
