@@ -60,12 +60,12 @@ define update_progress
 	$(eval PROGRESS := $(shell echo $$((($(COMPILED_SRCS) * 100) / $(NUM_SRCS)))))
 	@printf ${UP}${CUT}
 	@if [ $(PROGRESS) -eq 100 ]; then \
-		echo "$(WHITE)<$(GREEN)$(PROGRESS)%$(WHITE)> $(WHITE)[$(BLUE)$1$(WHITE)] $(YELLOW)compiled.$(DEFAULT)\r"; \
+		echo "$(WHITE)<$(GREEN)$(PROGRESS)%$(WHITE)> [$(BLUE)$1$(WHITE)] $(YELLOW)compiled.$(DEFAULT)\r"; \
 	else \
 		if [ $(PROGRESS) -lt 10 ]; then \
-			echo "$(WHITE)<  $(GREEN)$(PROGRESS)%$(WHITE)> $(WHITE)[$(BLUE)$1$(WHITE)] $(YELLOW)compiled.$(DEFAULT)\r"; \
+			echo "$(WHITE)<  $(GREEN)$(PROGRESS)%$(WHITE)> [$(BLUE)$1$(WHITE)] $(YELLOW)compiled.$(DEFAULT)\r"; \
 		else \
-			echo "$(WHITE)< $(GREEN)$(PROGRESS)%$(WHITE)> $(WHITE)[$(BLUE)$1$(WHITE)] $(YELLOW)compiled.$(DEFAULT)\r"; \
+			echo "$(WHITE)< $(GREEN)$(PROGRESS)%$(WHITE)> [$(BLUE)$1$(WHITE)] $(YELLOW)compiled.$(DEFAULT)\r"; \
 		fi \
 	fi
 endef

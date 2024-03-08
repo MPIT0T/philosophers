@@ -6,7 +6,7 @@
 /*   By: mpitot <mpitot@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 15:29:44 by mpitot            #+#    #+#             */
-/*   Updated: 2024/03/08 11:58:55 by mpitot           ###   ########.fr       */
+/*   Updated: 2024/03/08 12:21:44 by mpitot           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,15 +50,15 @@ void	ft_put_info(t_philo *philo, enum e_action action)
 void	error_msg(t_error error)
 {
 	if (error == ARGS)
-		ft_putstr_fd("\033[1;31mError\033[0m:\n\twrong number of arguments\n", 2);
+		ft_putstr_fd("\033[1;31mError\033[0m:\n\tWrong number of arguments.\n", 2);
 	else if (error == ARG)
-		ft_putstr_fd("\033[1;31mError\033[0m:\n\twrong argument\n", 2);
+		ft_putstr_fd("\033[1;31mError\033[0m:\n\tWrong argument.\n", 2);
 	else if (error == MALLOC)
-		ft_putstr_fd("\033[1;31mError\033[0m:\n\tmalloc failed\n", 2);
+		ft_putstr_fd("\033[1;31mError\033[0m:\n\tMalloc failed.\n", 2);
 	else if (error == MUTEX)
-		ft_putstr_fd("\033[1;31mError\033[0m:\n\tmutex error\n", 2);
+		ft_putstr_fd("\033[1;31mError\033[0m:\n\tMutex error.\n", 2);
 	else if (error == THREAD)
-		ft_putstr_fd("\033[1;31mError\033[0m:\n\tthread error\n", 2);
+		ft_putstr_fd("\033[1;31mError\033[0m:\n\tThreading error.\n", 2);
 }
 
 void	ft_putstr_fd(const char *s, int fd)
