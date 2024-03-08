@@ -13,7 +13,6 @@
 SRCS	=	main.c				\
 			utils.c				\
 			init.c				\
-			init2.c				\
 			print_info.c		\
 			time.c				\
 			routine_odd.c		\

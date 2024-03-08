@@ -16,23 +16,17 @@ static int	ft_eat_pair(t_philo *philo)
 {
 	while (!ft_try_rfork(philo))
 	{
-		pthread_mutex_lock(philo->m_last_meal);
 		if (ft_get_time(philo->data) - philo->last_meal > philo->data->time_to_die)
 			return (ft_put_info(philo, DIE), 1);
-		pthread_mutex_unlock(philo->m_last_meal);
 	}
 	while (!ft_try_lfork(philo))
 	{
-		pthread_mutex_lock(philo->m_last_meal);
 		if (ft_get_time(philo->data) - philo->last_meal > philo->data->time_to_die)
 			return (ft_put_info(philo, DIE), 1);
-		pthread_mutex_unlock(philo->m_last_meal);
 	}
 	ft_put_info(philo, EAT);
 	ft_usleep(philo, philo->data->time_to_eat);
-	pthread_mutex_lock(philo->m_last_meal);
 	philo->last_meal = ft_get_time(philo->data);
-	pthread_mutex_unlock(philo->m_last_meal);
 	philo->meals++;
 	ft_release_rfork(philo);
 	ft_release_lfork(philo);

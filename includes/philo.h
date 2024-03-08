@@ -6,7 +6,7 @@
 /*   By: mpitot <mpitot@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 15:10:44 by mpitot            #+#    #+#             */
-/*   Updated: 2024/03/07 20:47:50 by mpitot           ###   ########.fr       */
+/*   Updated: 2024/03/08 12:05:26 by mpitot           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ enum	e_action
 	DIE
 };
 
-typedef struct s_philo
+typedef struct	s_philo
 {
 	int				id;
 	pthread_t 		thread;
@@ -62,15 +62,15 @@ typedef struct s_philo
 	pthread_mutex_t	*m_last_meal;
 	size_t			meals;
 	struct s_data	*data;
-}	t_philo;
+}				t_philo;
 
-typedef struct s_fork
+typedef struct	s_fork
 {
 	int				owner;
 	pthread_mutex_t *mutex;
-}	t_fork;
+}				t_fork;
 
-typedef struct s_data
+typedef struct	s_data
 {
 	size_t			nb_philo;
 	t_philo			*philo;
@@ -84,7 +84,7 @@ typedef struct s_data
 	pthread_mutex_t	*ready;
 	pthread_mutex_t	*print;
 	bool			dead;
-}	t_data;
+}				t_data;
 
 
 //ROUTINE
@@ -99,7 +99,7 @@ int			ft_release_rfork(t_philo *philo);
 int			ft_try_rfork(t_philo *philo);
 int			ft_sleep(t_philo *philo);
 bool		ft_dead(t_data *data);
-
+void		ft_make_dead(t_data *data);
 
 //UTILS
 long		ft_atol(const char *nptr);
