@@ -6,7 +6,7 @@
 /*   By: mpitot <mpitot@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 15:10:44 by mpitot            #+#    #+#             */
-/*   Updated: 2024/03/08 12:05:26 by mpitot           ###   ########.fr       */
+/*   Updated: 2024/03/08 15:05:00 by mpitot           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@
 //CYAN		"\033[1;36m"
 //WHITE		"\033[1;37m"
 //DEFAULT	"\033[0m"
+
+# define MAX_PHILO 200
 
 struct s_data;
 struct s_fork;
@@ -59,7 +61,6 @@ typedef struct	s_philo
 	bool			alive;
 	pthread_mutex_t	*m_alive;
 	long long		last_meal;
-	pthread_mutex_t	*m_last_meal;
 	size_t			meals;
 	struct s_data	*data;
 }				t_philo;
@@ -67,7 +68,7 @@ typedef struct	s_philo
 typedef struct	s_fork
 {
 	int				owner;
-	pthread_mutex_t *mutex;
+	pthread_mutex_t	*mutex;
 }				t_fork;
 
 typedef struct	s_data

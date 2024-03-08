@@ -6,7 +6,7 @@
 /*   By: mpitot <mpitot@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 15:33:48 by mpitot            #+#    #+#             */
-/*   Updated: 2024/03/08 11:57:01 by mpitot           ###   ########.fr       */
+/*   Updated: 2024/03/08 15:05:00 by mpitot           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,10 +96,8 @@ int	ft_init_mutexes(t_data *data)
 		data->forks[i].owner = 0;
 		data->forks[i].mutex = malloc(sizeof(pthread_mutex_t));
 		data->philo[i].m_alive = malloc(sizeof(pthread_mutex_t));
-		data->philo[i].m_last_meal = malloc(sizeof(pthread_mutex_t));
 		if (pthread_mutex_init(data->forks[i].mutex, NULL)
-			|| pthread_mutex_init(data->philo[i].m_alive, NULL)
-			|| pthread_mutex_init(data->philo[i].m_last_meal, NULL))
+			|| pthread_mutex_init(data->philo[i].m_alive, NULL))
 			return (error_msg(4), 1);
 	}
 	return (0);

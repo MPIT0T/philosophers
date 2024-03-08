@@ -6,7 +6,7 @@
 /*   By: mpitot <mpitot@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 15:33:33 by mpitot            #+#    #+#             */
-/*   Updated: 2024/03/05 20:13:34 by mpitot           ###   ########.fr       */
+/*   Updated: 2024/03/08 14:57:27 by mpitot           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,12 +45,13 @@ void	*ft_routine_pair(void *arg)
 	{
 		if (ft_eat_pair(philo))
 			break ;
+		if (ft_dead(philo->data))
+			break ;
 		if (ft_sleep(philo))
+			break ;
+		if (ft_dead(philo->data))
 			break ;
 		ft_put_info(philo, THINK);
 	}
-	pthread_mutex_lock(philo->data->m_dead);
-	philo->data->dead = true;
-	pthread_mutex_unlock(philo->data->m_dead);
 	return (NULL);
 }
