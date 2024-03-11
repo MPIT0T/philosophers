@@ -31,7 +31,7 @@ HEAD	=	includes/
 
 NAME	=	philo
 
-CC		=	cc
+CC		=	gcc
 
 FLAGS	=	-Wall -Wextra -Werror -g3
 
@@ -72,12 +72,12 @@ endef
 
 all		:	${NAME}
 
-${OBJS}	:	${OBJ_D}%.o: ${SRC_D}%.c includes/philo.h
+${OBJS}	:	${OBJ_D}%.o: ${SRC_D}%.c Makefile includes/philo.h
 	@$(call print_progress,$<)
 	@${CC} ${FLAGS} -I${HEAD} -c $< -o $@
 	@$(call update_progress,$<)
 
-${NAME}	:	${OBJ_D} ${OBJS} Makefile includes/philo.h
+${NAME}	:	${OBJ_D} ${OBJS}
 	@echo "$(YELLOW)Compiling $(WHITE)[$(BLUE)$(NAME)$(WHITE)]...$(DEFAULT)"
 	@${CC} ${FLAGS} ${OBJS} -pthread -lpthread -I${HEAD} -o ${NAME}
 	@$(eval CHANGED=1)
@@ -93,7 +93,7 @@ clean	:
 	@echo "$(WHITE)[$(RED)$(OBJ_D)$(WHITE)] $(RED)deleted.$(DEFAULT)"
 
 fclean	:
-	@echo "F***ing-Cleaning $(WHITE)[$(RED)$(NAME)$(WHITE)]...$(DEFAULT)"
+	@echo "F***ing-Cleaning $(WHITE)[$(RED)philosophers$(WHITE)]...$(DEFAULT)"
 	@rm -rf ${OBJ_D}
 	@echo "$(WHITE)[$(RED)$(OBJ_D)$(WHITE)] $(RED)deleted.$(DEFAULT)"
 	@rm -f ${NAME}
