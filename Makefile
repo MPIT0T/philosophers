@@ -6,20 +6,22 @@
 #    By: mpitot <mpitot@student.42lyon.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/22 15:09:12 by mpitot            #+#    #+#              #
-#    Updated: 2024/03/07 20:49:17 by mpitot           ###   ########.fr        #
+#    Updated: 2024/03/14 14:31:32 by mpitot           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 SRCS	=	main.c				\
 			utils.c				\
 			init.c				\
+			init2.c				\
 			print_info.c		\
 			time.c				\
 			routine_odd.c		\
 			routine_pair.c		\
 			routine_utils.c		\
 			fork_operations.c	\
-			free.c
+			free.c				\
+			startup.c
 
 OBJS	=	$(SRCS:%.c=${OBJ_D}%.o)
 
@@ -35,6 +37,7 @@ CC		=	gcc
 
 FLAGS	=	-Wall -Wextra -Werror -g3
 
+BLACK	=	\033[1;30m
 RED		=	\033[1;31m
 GREEN	=	\033[1;32m
 YELLOW	=	\033[1;33m
@@ -79,7 +82,7 @@ ${OBJS}	:	${OBJ_D}%.o: ${SRC_D}%.c Makefile includes/philo.h
 
 ${NAME}	:	${OBJ_D} ${OBJS}
 	@echo "$(YELLOW)Compiling $(WHITE)[$(BLUE)$(NAME)$(WHITE)]...$(DEFAULT)"
-	@${CC} ${FLAGS} ${OBJS} -pthread -lpthread -I${HEAD} -o ${NAME}
+	@${CC} ${FLAGS} ${OBJS} -pthread -lpthread -I${HEAD} -o ${NAME} #-fsanitize=address
 	@$(eval CHANGED=1)
 	@printf ${UP}${CUT}
 	@echo "$(WHITE)<$(GREEN)100%$(WHITE)> [$(CYAN)$(NAME)$(WHITE)] $(GREEN)compiled.$(DEFAULT)"

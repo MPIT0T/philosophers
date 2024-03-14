@@ -6,13 +6,13 @@
 /*   By: mpitot <mpitot@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 15:08:13 by mpitot            #+#    #+#             */
-/*   Updated: 2024/03/04 11:45:57 by mpitot           ###   ########.fr       */
+/*   Updated: 2024/03/12 18:59:51 by mpitot           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int	ft_init(t_data *data, int argc, char **argv)
+/*int	ft_init(t_data *data, int argc, char **argv)
 {
 	size_t	i;
 
@@ -34,7 +34,7 @@ int	ft_init(t_data *data, int argc, char **argv)
 	if (ft_init_mutexes(data))
 		return (1);
 	return (0);
-}
+}*/
 
 int	main(int argc, char **argv)
 {
@@ -42,9 +42,13 @@ int	main(int argc, char **argv)
 
 	if (check_args(argc, argv))
 		return (1);
-	if (ft_init(&data, argc, argv))
+	if (ft_init(&data, argv))
 		return (1);
-	if (ft_init_threads(&data))
-		return (1);
+	if (ft_startup(&data))
+		return (destroy_all(&data), ft_free_all(&data), 1);
+	if (ft_check_meals(&data))
+		ft_put_eated(&data);
+	destroy_all(&data);
+	ft_free_all(&data);
 	return (0);
 }

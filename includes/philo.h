@@ -6,7 +6,7 @@
 /*   By: mpitot <mpitot@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 15:10:44 by mpitot            #+#    #+#             */
-/*   Updated: 2024/03/08 15:05:00 by mpitot           ###   ########.fr       */
+/*   Updated: 2024/03/12 20:20:01 by mpitot           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,13 @@ enum	e_action
 	DIE
 };
 
+typedef enum e_mutex
+{
+	DEAD,
+	READY,
+	PRINT
+}	t_mutex;
+
 typedef struct	s_philo
 {
 	int				id;
@@ -68,7 +75,7 @@ typedef struct	s_philo
 typedef struct	s_fork
 {
 	int				owner;
-	pthread_mutex_t	*mutex;
+	pthread_mutex_t	mutex;
 }				t_fork;
 
 typedef struct	s_data
@@ -81,9 +88,7 @@ typedef struct	s_data
 	long long		time_to_sleep;
 	long long		first_time;
 	size_t			max_meals;
-	pthread_mutex_t	*m_dead;
-	pthread_mutex_t	*ready;
-	pthread_mutex_t	*print;
+	pthread_mutex_t	*m_tab;
 	bool			dead;
 }				t_data;
 
@@ -110,7 +115,7 @@ int			check_args(int ac, char **av);
 
 //INIT
 int			ft_init_threads(t_data *data);
-int			ft_init(t_data *data, int argc, char **argv);
+int			ft_init(t_data *data, char **argv);
 int			ft_malloc_structs(t_data *data);
 void		ft_fill_structs(t_data *data, t_philo *philo, size_t i);
 int			ft_init_mutexes(t_data *data);
@@ -124,5 +129,11 @@ void		ft_put_eated(t_data *data);
 //TIME
 long long	ft_get_time(t_data *data);
 int			ft_usleep(t_philo *philo, long long time);
+
+int		ft_startup(t_data *data);
+int		ft_check_meals(t_data *data);
+void	ft_free_all(t_data *data);
+void	destroy_all(t_data *data);
+int		ft_malloc_mutexes(t_data *data);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: mpitot <mpitot@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 18:30:52 by mpitot            #+#    #+#             */
-/*   Updated: 2024/03/04 14:01:36 by mpitot           ###   ########.fr       */
+/*   Updated: 2024/03/12 18:58:14 by mpitot           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,16 @@
 
 void	ft_free_all(t_data *data)
 {
-	size_t	i;
-
-	i = -1;
-	while (++i < data->nb_philo)
-		free(data->forks[i].mutex);
 	free(data->forks);
 	free(data->philo);
-	return ;
+	free(data->m_tab);
 }
-/*
 
 void	destroy_all(t_data *data)
 {
-	return ;
-}*/
+	pthread_mutex_destroy(&data->m_tab[READY]);
+	pthread_mutex_destroy(&data->m_tab[PRINT]);
+	pthread_mutex_destroy(&data->m_tab[DEAD]);
+	while (data->nb_philo--)
+		pthread_mutex_destroy(&data->forks[data->nb_philo].mutex);
+}

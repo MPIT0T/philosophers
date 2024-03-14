@@ -6,7 +6,7 @@
 /*   By: mpitot <mpitot@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 15:33:30 by mpitot            #+#    #+#             */
-/*   Updated: 2024/03/11 14:56:50 by mpitot           ###   ########.fr       */
+/*   Updated: 2024/03/14 17:39:12 by mpitot           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,21 +39,22 @@ void	*ft_routine_odd(void *arg)
 	t_philo	*philo;
 
 	philo = (t_philo *)arg;
-	pthread_mutex_lock(philo->data->ready);
-	pthread_mutex_unlock(philo->data->ready);
+	pthread_mutex_lock(&philo->data->m_tab[READY]);
+	pthread_mutex_unlock(&philo->data->m_tab[READY]);
 	while (!ft_dead(philo->data) &&
 	(philo->data->max_meals == 0 || philo->meals < philo->data->max_meals))
 	{
 		if (ft_eat_odd(philo))
 			break ;
-		if (ft_dead(philo->data))
+		if (ft_dead(philo->data)
+		|| (philo->data->max_meals != 0
+		&& philo->meals >= philo->data->max_meals))
 			break ;
 		if (ft_sleep(philo))
 			break ;
 		if (ft_dead(philo->data))
 			break ;
 		ft_put_info(philo, THINK);
-//		usleep(500);
 	}
 	return (NULL);
 }

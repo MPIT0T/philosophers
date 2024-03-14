@@ -6,7 +6,7 @@
 /*   By: mpitot <mpitot@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 15:31:00 by mpitot            #+#    #+#             */
-/*   Updated: 2024/03/08 16:33:31 by mpitot           ###   ########.fr       */
+/*   Updated: 2024/03/09 17:09:58 by mpitot           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,19 +14,16 @@
 
 int	ft_usleep(t_philo *philo, long long time)
 {
-	long long	time_curr;
+	long long	first_time;
 
-	time_curr = ft_get_time(philo->data);
-	while (time_curr - philo->last_meal < time)
+	first_time = ft_get_time(philo->data);
+	while (ft_get_time(philo->data) - first_time < time)
 	{
-		if (time_curr - philo->last_meal > philo->data->time_to_die)
+		if (ft_get_time(philo->data) - philo->last_meal > philo->data->time_to_die)
 		{
 			ft_put_info(philo, DIE);
-			philo->alive = false;
-			philo->data->dead = true;
 			return (1);
 		}
-		time_curr = ft_get_time(philo->data);
 	}
 	return (0);
 }

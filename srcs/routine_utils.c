@@ -24,15 +24,15 @@ bool	ft_dead(t_data *data)
 {
 	bool	x;
 
-	pthread_mutex_lock(data->m_dead);
+	pthread_mutex_lock(&data->m_tab[DEAD]);
 	x = data->dead;
-	pthread_mutex_unlock(data->m_dead);
+	pthread_mutex_unlock(&data->m_tab[DEAD]);
 	return (x);
 }
 
 void	ft_make_dead(t_data *data)
 {
-	pthread_mutex_lock(data->m_dead);
+	pthread_mutex_lock(&data->m_tab[DEAD]);
 	data->dead = true;
-	pthread_mutex_unlock(data->m_dead);
+	pthread_mutex_unlock(&data->m_tab[DEAD]);
 }
