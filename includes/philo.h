@@ -6,7 +6,7 @@
 /*   By: mpitot <mpitot@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 15:10:44 by mpitot            #+#    #+#             */
-/*   Updated: 2024/03/14 18:55:25 by mpitot           ###   ########.fr       */
+/*   Updated: 2024/03/14 22:20:53 by mpitot           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,7 @@ typedef struct s_data
 	size_t			max_meals;
 	pthread_mutex_t	*m_tab;
 	bool			dead;
+	bool			eated;
 }				t_data;
 
 //ROUTINE

@@ -21,6 +21,7 @@ int	ft_init_forks(t_data *data)
 	{
 		if (pthread_mutex_init(&data->forks[i].mutex, NULL))
 		{
+			i--;
 			while (i--)
 				pthread_mutex_destroy(&data->forks[i].mutex);
 			pthread_mutex_destroy(&data->m_tab[READY]);
@@ -47,9 +48,7 @@ int	ft_init_mutexes(t_data *data)
 		pthread_mutex_destroy(&data->m_tab[PRINT]);
 		return (error_msg(MUTEX), 1);
 	}
-	if (ft_init_forks(data))
-		return (1);
-	return (0);
+	return (ft_init_forks(data));
 }
 
 int	ft_malloc_mutexes(t_data *data)

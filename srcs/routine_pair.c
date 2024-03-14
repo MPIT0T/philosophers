@@ -6,34 +6,33 @@
 /*   By: mpitot <mpitot@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 15:33:33 by mpitot            #+#    #+#             */
-/*   Updated: 2024/03/14 20:27:49 by mpitot           ###   ########.fr       */
+/*   Updated: 2024/03/14 22:57:45 by mpitot           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-static int	ft_eat_pair(t_philo *philo)
+static void	ft_eat(t_philo *philo)
 {
-	while (!ft_try_rfork(philo))
-	{
-		/*if (ft_get_time(philo->data) - philo->last_meal
-			> philo->data->time_to_die)
-			return (ft_put_info(philo, DIE), 1);*/
-	}
-	while (!ft_try_lfork(philo))
-	{
-		/*if (ft_get_time(philo->data) - philo->last_meal
-			> philo->data->time_to_die)
-			return (ft_put_info(philo, DIE), 1);*/
-	}
-	philo->last_meal = ft_get_time(philo->data);
+	pthread_mutex_lock(&philo->r_fork->mutex);
+	ft_put_info(philo, FORK);
+	pthread_mutex_lock(&philo->l_fork->mutex);
+	ft_put_info(philo, FORK);
+//	philo->last_meal = ft_get_time(philo->data);
 	ft_put_info(philo, EAT);
 	ft_usleep(philo, philo->data->time_to_eat);
 	philo->last_meal = ft_get_time(philo->data);
 	philo->meals++;
-	ft_release_rfork(philo);
-	ft_release_lfork(philo);
-	return (0);
+	pthread_mutex_unlock(&philo->r_fork->mutex);
+	pthread_mutex_unlock(&philo->l_fork->mutex);
+}
+
+static void	ft_one_philo(t_philo *philo)
+{
+	ft_put_info(philo, FORK);
+	ft_usleep(philo, philo->data->time_to_die);
+	ft_put_info(philo, DIE);
+	usleep(500);
 }
 
 void	*ft_routine_pair(void *arg)
@@ -43,12 +42,13 @@ void	*ft_routine_pair(void *arg)
 	philo = (t_philo *)arg;
 	pthread_mutex_lock(&philo->data->m_tab[READY]);
 	pthread_mutex_unlock(&philo->data->m_tab[READY]);
+	if (philo->data->nb_philo == 1)
+		return (ft_one_philo(philo), NULL);
 	while (!ft_dead(philo->data)
 		&& (philo->data->max_meals == 0
 			|| philo->meals < philo->data->max_meals))
 	{
-		if (ft_eat_pair(philo))
-			break ;
+		ft_eat(philo);
 		if (ft_dead(philo->data)
 			|| (philo->data->max_meals != 0
 				&& philo->meals >= philo->data->max_meals))
@@ -59,5 +59,6 @@ void	*ft_routine_pair(void *arg)
 			break ;
 		ft_put_info(philo, THINK);
 	}
+	usleep(500);
 	return (NULL);
 }

@@ -6,7 +6,7 @@
 /*   By: mpitot <mpitot@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 15:33:48 by mpitot            #+#    #+#             */
-/*   Updated: 2024/03/14 18:55:44 by mpitot           ###   ########.fr       */
+/*   Updated: 2024/03/14 21:46:06 by mpitot           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ void	ft_fill_data(t_data *data, char **argv)
 	data->time_to_eat = ft_atol(argv[3]);
 	data->time_to_sleep = ft_atol(argv[4]);
 	data->dead = false;
+	data->eated = false;
 	data->first_time = 0;
 	if (argv[5])
 		data->max_meals = ft_atol(argv[5]);

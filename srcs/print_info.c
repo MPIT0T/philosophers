@@ -35,20 +35,20 @@ void	ft_put_info(t_philo *philo, t_action action)
 	time_in_ms = ft_get_time(philo->data);
 	if (action == FORK)
 		ft_print_info(philo, time_in_ms,
-			"%lli %d has taken a fork\n");
+			"%lli \033[1;36m%d \033[1;33mhas taken a fork\033[0m\n");
 	else if (action == EAT)
 		ft_print_info(philo, time_in_ms,
-			"%lli %d is eating\n");
+			"%lli \033[1;36m%d \033[1;33mis eating\033[0m\n");
 	else if (action == SLEEP)
 		ft_print_info(philo, time_in_ms,
-			"%lli %d is sleeping\n");
+			"%lli \033[1;36m%d \033[1;33mis sleeping\033[0m\n");
 	else if (action == THINK)
 		ft_print_info(philo, time_in_ms,
-			"%lli %d is thinking\n");
+			"%lli \033[1;36m%d \033[1;33mis thinking\033[0m\n");
 	else if (action == DIE)
 	{
 		ft_print_info(philo, time_in_ms,
-			"%lli %d has died\n");
+			"%lli \033[1;36m%d \033[1;31mhas died\033[0m\n");
 		ft_make_dead(philo->data);
 	}
 }

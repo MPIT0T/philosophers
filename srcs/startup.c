@@ -6,7 +6,7 @@
 /*   By: mpitot <mpitot@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 18:27:45 by mpitot            #+#    #+#             */
-/*   Updated: 2024/03/14 18:06:30 by mpitot           ###   ########.fr       */
+/*   Updated: 2024/03/14 23:05:05 by mpitot           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,14 +16,20 @@ void	ft_check_death(t_data *data)
 {
 	size_t	i;
 
-	while (ft_dead(data))
+	while (!ft_dead(data))
 	{
 		i = -1;
-		while (++i < data->nb_philo)
+		while (++i < data->nb_philo && !ft_dead(data))
 		{
 			if (ft_get_time(data->philo[i].data) - data->philo[i].last_meal
-				> data->philo[i].data->time_to_die)
+				> data->philo[i].data->time_to_die
+				&& (data->philo[i].data->max_meals == 0
+					|| data->philo[i].meals < data->philo[i].data->max_meals))
+			{
+				ft_put_info(&data->philo[i], DIE);
 				ft_make_dead(data);
+				break ;
+			}
 		}
 	}
 }
