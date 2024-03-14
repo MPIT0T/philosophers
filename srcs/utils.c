@@ -6,7 +6,7 @@
 /*   By: mpitot <mpitot@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 19:49:42 by mpitot            #+#    #+#             */
-/*   Updated: 2024/03/14 18:17:43 by mpitot           ###   ########.fr       */
+/*   Updated: 2024/03/14 19:42:35 by mpitot           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,9 +74,12 @@ int	check_args(int ac, char **av)
 		if (!ft_isdigit(av[i]))
 			return (error_msg(ARG), 1);
 	}
-	if (ft_atol(av[1]) < 1 || ft_atol(av[1]) > MAX_PHILO)
-		return (error_msg(ARG), 1);
-	if (ac == 6 && (ft_atol(av[5]) < 1))
+	if (ft_atol(av[1]) < 1
+		|| ft_atol(av[1]) > MAX_PHILO
+		|| ft_atol(av[2]) < 60
+		|| ft_atol(av[3]) < 60
+		|| ft_atol(av[4]) < 60
+		|| (ac == 6 && ft_atol(av[5]) < 1))
 		return (error_msg(ARG), 1);
 	return (0);
 }

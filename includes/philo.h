@@ -6,7 +6,7 @@
 /*   By: mpitot <mpitot@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 15:10:44 by mpitot            #+#    #+#             */
-/*   Updated: 2024/03/14 18:00:45 by mpitot           ###   ########.fr       */
+/*   Updated: 2024/03/14 18:55:25 by mpitot           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,8 +65,6 @@ typedef struct s_philo
 	pthread_t		thread;
 	struct s_fork	*l_fork;
 	struct s_fork	*r_fork;
-	bool			alive;
-	pthread_mutex_t	*m_alive;
 	long long		last_meal;
 	size_t			meals;
 	struct s_data	*data;
@@ -113,11 +111,14 @@ int			ft_isdigit(const char *str);
 int			check_args(int ac, char **av);
 
 //INIT
-int			ft_init_threads(t_data *data);
 int			ft_init(t_data *data, char **argv);
 int			ft_malloc_structs(t_data *data);
-void		ft_fill_structs(t_data *data, t_philo *philo, size_t i);
 int			ft_init_mutexes(t_data *data);
+int			ft_startup(t_data *data);
+int			ft_check_meals(t_data *data);
+void		ft_free_all(t_data *data);
+void		destroy_all(t_data *data);
+int			ft_malloc_mutexes(t_data *data);
 
 //PRINT
 void		ft_put_info(t_philo *philo, enum e_action action);
@@ -128,11 +129,5 @@ void		ft_put_eated(t_data *data);
 //TIME
 long long	ft_get_time(t_data *data);
 int			ft_usleep(t_philo *philo, long long time);
-
-int			ft_startup(t_data *data);
-int			ft_check_meals(t_data *data);
-void		ft_free_all(t_data *data);
-void		destroy_all(t_data *data);
-int			ft_malloc_mutexes(t_data *data);
 
 #endif
