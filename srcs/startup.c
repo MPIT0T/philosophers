@@ -6,7 +6,7 @@
 /*   By: mpitot <mpitot@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 18:27:45 by mpitot            #+#    #+#             */
-/*   Updated: 2024/03/14 23:05:05 by mpitot           ###   ########.fr       */
+/*   Updated: 2024/03/14 23:13:05 by mpitot           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,8 @@ int	ft_check_meals(t_data *data)
 {
 	size_t	i;
 
+	if (data->max_meals == 0)
+		return (0);
 	i = -1;
 	while (++i < data->nb_philo)
 	{
