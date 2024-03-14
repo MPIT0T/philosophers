@@ -6,7 +6,7 @@
 /*   By: mpitot <mpitot@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 15:33:48 by mpitot            #+#    #+#             */
-/*   Updated: 2024/03/14 16:27:07 by mpitot           ###   ########.fr       */
+/*   Updated: 2024/03/14 16:35:07 by mpitot           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,7 @@ void	ft_fill_structs(t_data *data, t_philo *philo, size_t i)
 }
 */
 
-int		ft_malloc_structs(t_data *data)
+int	ft_malloc_structs(t_data *data)
 {
 	data->philo = malloc(sizeof(t_philo) * data->nb_philo);
 	if (!data->philo)
@@ -157,7 +157,7 @@ void	ft_fill_data(t_data *data, char **argv)
 		data->max_meals = 0;
 }
 
-int		ft_init(t_data *data, char **argv)
+int	ft_init(t_data *data, char **argv)
 {
 	data->nb_philo = ft_atol(argv[1]);
 	if (ft_malloc_structs(data))

@@ -38,7 +38,7 @@
 
 int	main(int argc, char **argv)
 {
-	t_data data;
+	t_data	data;
 
 	if (check_args(argc, argv))
 		return (1);

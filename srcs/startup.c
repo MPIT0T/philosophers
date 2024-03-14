@@ -6,13 +6,13 @@
 /*   By: mpitot <mpitot@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 18:27:45 by mpitot            #+#    #+#             */
-/*   Updated: 2024/03/12 19:24:38 by mpitot           ###   ########.fr       */
+/*   Updated: 2024/03/14 18:06:25 by mpitot           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "philo.h"
+#include "philo.h"
 
-int		ft_create_threads(t_data *data)
+int	ft_create_threads(t_data *data)
 {
 	size_t	i;
 
@@ -35,7 +35,7 @@ int		ft_create_threads(t_data *data)
 	return (0);
 }
 
-int		ft_startup(t_data *data)
+int	ft_startup(t_data *data)
 {
 	size_t	i;
 
@@ -54,7 +54,7 @@ int		ft_startup(t_data *data)
 	return (0);
 }
 
-int		ft_check_meals(t_data *data)
+int	ft_check_meals(t_data *data)
 {
 	size_t	i;
 
