@@ -81,7 +81,7 @@ ${OBJS}	:	${OBJ_D}%.o: ${SRC_D}%.c Makefile includes/philo.h
 	@$(call update_progress,$<)
 
 ${NAME}	:	${OBJ_D} ${OBJS}
-	@echo "$(YELLOW)Compiling $(WHITE)[$(BLUE)$(NAME)$(WHITE)]...$(DEFAULT)"
+	@echo "$(YELLOW)Compiling $(WHITE)[$(CYAN)$(NAME)$(WHITE)]...$(DEFAULT)"
 	@${CC} ${FLAGS} ${OBJS} -pthread -lpthread -I${HEAD} -o ${NAME} #-fsanitize=address
 	@$(eval CHANGED=1)
 	@printf ${UP}${CUT}
