@@ -6,7 +6,7 @@
 /*   By: mpitot <mpitot@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 15:40:24 by mpitot            #+#    #+#             */
-/*   Updated: 2024/03/08 11:57:01 by mpitot           ###   ########.fr       */
+/*   Updated: 2024/03/23 20:27:47 by mpitot           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ int	ft_sleep(t_philo *philo)
 	ft_put_info(philo, SLEEP);
 	if (ft_usleep(philo, philo->data->time_to_sleep))
 		return (1);
+//	usleep(500);
 	return (0);
 }
 

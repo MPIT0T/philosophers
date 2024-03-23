@@ -87,6 +87,7 @@ typedef struct s_data
 	long long		first_time;
 	size_t			max_meals;
 	pthread_mutex_t	*m_tab;
+	bool			ready;
 	bool			dead;
 	bool			eated;
 }				t_data;

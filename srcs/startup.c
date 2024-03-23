@@ -71,7 +71,8 @@ int	ft_startup(t_data *data)
 	}
 	data->first_time = ft_get_time(data);
 	pthread_mutex_unlock(&data->m_tab[READY]);
-	ft_check_death(data);
+//	data->ready = true;
+//	ft_check_death(data);
 	while (++i < data->nb_philo)
 		pthread_join(data->philo[i].thread, NULL);
 	return (0);

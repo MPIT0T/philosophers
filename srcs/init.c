@@ -46,6 +46,7 @@ void	ft_fill_data(t_data *data, char **argv)
 	data->time_to_sleep = ft_atol(argv[4]);
 	data->dead = false;
 	data->eated = false;
+	data->ready = false;
 	data->first_time = 0;
 	if (argv[5])
 		data->max_meals = ft_atol(argv[5]);
